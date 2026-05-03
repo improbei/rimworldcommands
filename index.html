@@ -142,6 +142,10 @@ function buildUI() {
         createInput("item", data.items || []);
     }
 
+    if (cmd === "trait") {
+    createInput("trait", data.traits);
+    }
+    
     if (cmd === "equip") {
         createInput("equip", data["equip items"] || []);
         createInput("quality", data.quality);
