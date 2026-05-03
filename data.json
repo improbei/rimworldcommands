@@ -15,9 +15,7 @@
     "!my pawn","View your pawn",
     "!pawn","Create a pawn",
     "!raid","Trigger a raid",
-    "!replacetrait","Replace a trait",
-    "!set traits","Set pawn traits",
-    "!surgery","Perform surgery",
+    "!surgery","Perform surgery on your pawn",
     "!trait","View trait info",
     "!use","Use an item",
     "!wear","Wear clothing"
