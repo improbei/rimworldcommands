@@ -70,4 +70,7 @@
   "quality": [
     "Awful","Poor","Normal","Good","Excellent","Masterwork","Legendary"
   ]
+  "surgery": [
+    "Aesthetic nose", "Aesthetic shaper", "Armorskin gland", "Bionic arm", "Bionic ear", "Bionic eye", "Bionic heart", "Bionic jaw", "Bionic leg", "Bionic spine", "Bionic stomach", "Bionic tongue", "Circadian assistant", "Circadian half-cycler", "Coagulator", "Death acidifier", "Detoxifier kidney", "Detoxifier lung", "Gastro-analyzer", "Healing enhancer", "Immunoenhancer", "Learning assistant", "Love enhancer", "Neurocalculator", "Nuclear stomach", "Reprocessor stomach", "Sterilizing stomach", "Stone skin gland", "Tough skin gland", "Heart", "Kidney", "Liver", "Lung"
+  ]  
 }
