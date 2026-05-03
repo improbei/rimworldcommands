@@ -1,159 +1,187 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RimWorld Command Generator</title>
+<title>Command Generator</title>
 
 <style>
-body { font-family: Arial; padding: 20px; background:#111; color:#fff;}
-select, button {
-  margin: 6px;
-  padding: 8px;
-  background:#222;
-  color:#fff;
-  border:1px solid #444;
+body {
+    font-family: Arial;
+    background: #0f0f0f;
+    color: white;
+    padding: 20px;
 }
-#output { margin-top:15px; font-weight:bold; color:#00ffcc; }
+
+.container {
+    max-width: 750px;
+    margin: auto;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid #333;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #22c55e;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.output {
+    background: #1a1a1a;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #333;
+}
 </style>
 </head>
+
 <body>
 
-<h2>RimWorld Command Generator</h2>
+<div class="container">
 
-<select id="commandSelect"></select>
-<span id="description" style="margin-left:10px;color:#aaa;"></span>
+<h2>Command Generator</h2>
 
-<div id="dynamicInputs"></div>
+<input list="commands" id="commandInput" placeholder="Select Command">
+<datalist id="commands"></datalist>
 
-<br>
-<button onclick="generateCommand()">Generate Command</button>
-<button onclick="copyCommand()">Copy</button>
+<div id="description"></div>
+<div id="dynamic"></div>
 
-<div id="output"></div>
+<div class="output" id="result"></div>
+
+<button onclick="copyCommand()">Copy Command</button>
+
+</div>
 
 <script>
-// ================= DATA (FULL FROM YOUR SPREADSHEET) =================
+let data = {};
+let commandDescriptions = {};
 
-const commands = [
-"!addtrait","!backpack","!bal","!buy","!equip","!event","!healpawn",
-"!lookup","!militaryaid","!mypawn","!pawn","!pricecheck","!raid",
-"!removetrait","!replacetrait","!surgery","!use","!wear","!joinqueue"
-];
+fetch("data.json")
+.then(res => res.json())
+.then(json => {
+    data = json;
 
-const descriptions = {
-"!addtrait":"Add a trait to your pawn(Max 6)",
-"!backpack":"add an item to your pawns backpack",
-"!bal":"check your coin/karma balance",
-"!buy":"buy an item for the colony",
-"!equip":"equip your pawn with a weapon",
-"!event":"trigger an event",
-"!healpawn":"heal your pawn",
-"!lookup":"lookup an item",
-"!militaryaid":"call in military aid for the colony",
-"!mypawn":"look at info about your pawn",
-"!pawn":"buy a pawn",
-"!pricecheck":"check the price of an item",
-"!raid":"trigger a raid against the colony",
-"!removetrait":"remove a trait from your pawn",
-"!replacetrait":"replace one of your pawns traits with another",
-"!surgery":"queue up a surgery for your pawn",
-"!use":"have your pawn use an item",
-"!wear":"buy clothing/armor for your pawn to wear",
-"!joinqueue":"join the queue to have a pawn without buying one"
-};
+    // Extract commands + descriptions
+    for (let i = 0; i < data.commands.length; i += 2) {
+        let rawCmd = data.commands[i];
+        let desc = data.commands[i + 1];
 
-// trimmed here for readability in explanation — but INCLUDED FULL below
-const data = {
-traits: ["Abrasive","Annoying Voice","Beautiful","Ugly","Bloodlust","Kind","Psychopath","Pyromaniac","Tough","Wimp","Fast Learner","Slow Learner","Industrious","Lazy","Greedy","Jealous","Sanguine","Depressive","Neurotic","Very Neurotic"],
+        if (!rawCmd.startsWith("!")) continue;
 
-items: [...new Set([
-"Wood","Steel","Silver","Gold","Plasteel","Uranium","Cloth","Devilstrand","Hyperweave","Synthread",
-"Rice","Corn","Potatoes","Berries","Beer","Yayo","Smokeleaf Joint","Go-Juice","Luciferium",
-"Medicine","Herbal Medicine","Glitterworld Medicine","Component","Advanced Component",
-"Simple Meal","Fine Meal","Lavish Meal","Packaged Survival Meal"
-])],
+        let clean = rawCmd.replace("!", "").toLowerCase();
+        commandDescriptions[clean] = desc;
 
-wear: ["Duster","Parka","Jacket","T-Shirt","Plate Armor","Marine Armor","Cataphract Armor","Recon Armor","Flak Vest","Flak Jacket","Flak Pants","Tuque","Cowboy Hat","Beret","Helmet","Marine Helmet","Recon Helmet"],
-
-equip: ["Assault Rifle","Sniper Rifle","Charge Rifle","Minigun","Pump Shotgun","Revolver","LMG","Heavy SMG","Machine Pistol","Zeushammer","Monosword","Plasmasword","Knife","Spear","Warhammer","Frag Grenades","EMP Grenades","Triple Rocket Launcher"],
-
-use: ["Go-Juice","Luciferium","Smokeleaf Joint","Yayo","Beer","Psychite Tea","Penoxycyline"],
-
-materials: ["Steel","Plasteel","Uranium","Gold","Silver","Cloth","Devilstrand","Hyperweave"],
-
-quality: ["Awful","Poor","Normal","Good","Excellent","Masterwork","Legendary"],
-
-events: ["Raid","Manhunter Pack","Infestation","Trader Caravan","Meteorite Impact","Solar Flare","Psychic Drone","Transport Pod Crash"],
-
-race: ["Human"],
-xeno: ["Baseliner","Hussar","Genie","Impids","Pigskin","Yttakin","Neanderthal"],
-sex: ["Male","Female"],
-age: ["18","20","25","30","35","40","45","50","60","70","80"]
-};
-
-// ================= UI =================
-
-const commandSelect = document.getElementById("commandSelect");
-
-commands.forEach(cmd=>{
-  let opt = document.createElement("option");
-  opt.value = cmd;
-  opt.textContent = cmd;
-  commandSelect.appendChild(opt);
+        let option = document.createElement("option");
+        option.value = clean;
+        document.getElementById("commands").appendChild(option);
+    }
 });
 
-commandSelect.addEventListener("change", updateUI);
-updateUI();
+document.getElementById("commandInput").addEventListener("input", buildUI);
 
-function createDropdown(list){
-  let select = document.createElement("select");
-  list.forEach(item=>{
-    let opt = document.createElement("option");
-    opt.value = item;
-    opt.textContent = item;
-    select.appendChild(opt);
-  });
-  return select;
+function createInput(id, list) {
+    const input = document.createElement("input");
+    input.setAttribute("list", id);
+    input.placeholder = id;
+
+    const datalist = document.createElement("datalist");
+    datalist.id = id;
+
+    list.forEach(item => {
+        let option = document.createElement("option");
+        option.value = item;
+        datalist.appendChild(option);
+    });
+
+    document.getElementById("dynamic").appendChild(input);
+    document.getElementById("dynamic").appendChild(datalist);
 }
 
-function updateUI(){
-  const cmd = commandSelect.value;
-  document.getElementById("description").textContent = descriptions[cmd] || "";
+function buildUI() {
+    const cmd = document.getElementById("commandInput").value;
+    const dynamic = document.getElementById("dynamic");
+    dynamic.innerHTML = "";
 
-  const container = document.getElementById("dynamicInputs");
-  container.innerHTML = "";
+    document.getElementById("description").innerHTML =
+        commandDescriptions[cmd] || "";
 
-  function add(...lists){
-    lists.forEach(l=>container.appendChild(createDropdown(l)));
-  }
+    if (cmd === "addtrait") {
+        createInput("trait", data["traits"]);
+    }
 
-  switch(cmd){
-    case "!addtrait": add(data.traits); break;
-    case "!removetrait": add(data.traits, data.traits); break;
-    case "!buy": add(data.items); break;
-    case "!equip": add(data.equip, data.quality); break;
-    case "!event": add(data.events); break;
-    case "!lookup":
-      add([...data.items, ...data.wear, ...data.equip, ...data.use]);
-      break;
-    case "!pawn":
-      add(data.race, data.xeno, data.sex, data.age);
-      break;
-    case "!use": add(data.use); break;
-    case "!wear": add(data.wear, data.materials, data.quality); break;
-  }
+    if (cmd === "removetrait") {
+        createInput("trait1", data["traits"]);
+        createInput("trait2", data["traits"]);
+    }
+
+    if (cmd === "buy") {
+        createInput("item", data["items"]);
+    }
+
+    if (cmd === "equip") {
+        createInput("equip", data["equip items"]);
+        createInput("quality", data["quality"]);
+    }
+
+    if (cmd === "event") {
+        createInput("event", data["events"]);
+    }
+
+    if (cmd === "lookup") {
+        let combined = [
+            ...data["items"],
+            ...data["wear items"],
+            ...data["equip items"],
+            ...data["use items"]
+        ];
+        createInput("lookup", combined);
+    }
+
+    if (cmd === "pawn") {
+        createInput("race", data["race"]);
+        createInput("xeno", data["xeno"]);
+        createInput("sex", data["sex"]);
+        createInput("age", data["age"]);
+    }
+
+    if (cmd === "use") {
+        createInput("use", data["use items"]);
+    }
+
+    if (cmd === "wear") {
+        createInput("wear", data["wear items"]);
+        createInput("material", data["material"]);
+        createInput("quality", data["quality"]);
+    }
+
+    generateCommand();
 }
 
-function generateCommand(){
-  const cmd = commandSelect.value;
-  const selects = document.querySelectorAll("#dynamicInputs select");
-  const values = Array.from(selects).map(s=>s.value);
+document.addEventListener("input", generateCommand);
 
-  document.getElementById("output").textContent =
-    cmd + " " + values.join(" ");
+function generateCommand() {
+    const cmd = document.getElementById("commandInput").value;
+    const inputs = document.querySelectorAll("#dynamic input");
+
+    let values = Array.from(inputs).map(i => i.value).filter(v => v);
+
+    document.getElementById("result").textContent =
+        cmd ? "!" + cmd + " " + values.join(" ") : "";
 }
 
-function copyCommand(){
-  navigator.clipboard.writeText(document.getElementById("output").textContent);
+function copyCommand() {
+    navigator.clipboard.writeText(document.getElementById("result").textContent);
+    alert("Copied!");
 }
 </script>
 
