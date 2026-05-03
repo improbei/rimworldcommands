@@ -51,6 +51,11 @@
   ],
 
   "race": ["Human"],
+  
+  "xeno": [
+    "Baseliner", "Hybrid", "Dirtmole", "Genie", "Highmate", "Hussar", "Impid", "Neanderthal", "Pigskin", "Sanguophage", "Waster", "Yttakin"
+  ],
+
 
   "sex": ["Male","Female"],
 
