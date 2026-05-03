@@ -129,6 +129,15 @@ function buildUI() {
         createInput("trait2", data.traits);
     }
 
+    if (cmd === "settraits") {
+        createInput("trait1", data.traits);
+        createInput("trait2", data.traits);
+        createInput("trait3", data.traits);
+        createInput("trait4", data.traits);
+        createInput("trait5", data.traits);
+        createInput("trait6", data.traits);
+    }
+    
     if (cmd === "buy") {
         createInput("item", data.items || []);
     }
