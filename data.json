@@ -2,10 +2,8 @@
   "commands": [
     "!accept pawn","Accept a pawn into your colony",
     "!addtrait","Add a trait to a pawn",
-    "!backpack","Give a pawn a backpack",
     "!balance","Check your balance",
     "!buy","Buy an item",
-    "!colonist","Spawn a colonist",
     "!equip","Equip a pawn",
     "!event","Trigger an event",
     "!healpawn","Heal a pawn",
