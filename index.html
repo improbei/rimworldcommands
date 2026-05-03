@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,12 +11,10 @@ body {
     color: white;
     padding: 20px;
 }
-
 .container {
     max-width: 750px;
     margin: auto;
 }
-
 input {
     width: 100%;
     padding: 10px;
@@ -24,7 +23,6 @@ input {
     color: white;
     border: 1px solid #333;
 }
-
 button {
     width: 100%;
     padding: 12px;
@@ -34,7 +32,6 @@ button {
     font-weight: bold;
     cursor: pointer;
 }
-
 .output {
     background: #1a1a1a;
     padding: 15px;
@@ -66,25 +63,31 @@ button {
 let data = {};
 let commandDescriptions = {};
 
+// Normalize command (removes spaces issues)
+function normalize(cmd) {
+    return cmd.replace("!", "").replace(/\s+/g, "").toLowerCase();
+}
+
 fetch("data.json")
 .then(res => res.json())
 .then(json => {
     data = json;
 
-    // Extract commands + descriptions
     for (let i = 0; i < data.commands.length; i += 2) {
-        let rawCmd = data.commands[i];
+        let raw = data.commands[i];
         let desc = data.commands[i + 1];
 
-        if (!rawCmd.startsWith("!")) continue;
-
-        let clean = rawCmd.replace("!", "").toLowerCase();
+        let clean = normalize(raw);
         commandDescriptions[clean] = desc;
 
         let option = document.createElement("option");
         option.value = clean;
         document.getElementById("commands").appendChild(option);
     }
+})
+.catch(err => {
+    console.error("DATA LOAD FAILED:", err);
+    alert("Failed to load data.json");
 });
 
 document.getElementById("commandInput").addEventListener("input", buildUI);
@@ -108,68 +111,65 @@ function createInput(id, list) {
 }
 
 function buildUI() {
-    const cmd = document.getElementById("commandInput").value;
+    const rawCmd = document.getElementById("commandInput").value;
+    const cmd = normalize(rawCmd);
+
     const dynamic = document.getElementById("dynamic");
     dynamic.innerHTML = "";
 
-    document.getElementById("description").innerHTML =
+    document.getElementById("description").innerText =
         commandDescriptions[cmd] || "";
 
-    if (cmd === "addtrait") {
-        createInput("trait", data["traits"]);
+    if (cmd === "addtrait" || cmd === "removetrait") {
+        createInput("trait", data.traits);
     }
 
     if (cmd === "replacetrait") {
-        createInput("trait1", data["traits"]);
-        createInput("trait2", data["traits"]);
-    }
-
-    if (cmd === "removetrait") {
-        createInput("trait", data["traits"]);
+        createInput("trait1", data.traits);
+        createInput("trait2", data.traits);
     }
 
     if (cmd === "buy") {
-        createInput("item", data["items"]);
+        createInput("item", data.items || []);
     }
 
     if (cmd === "equip") {
-        createInput("equip", data["equip items"]);
-        createInput("quality", data["quality"]);
+        createInput("equip", data["equip items"] || []);
+        createInput("quality", data.quality);
     }
 
     if (cmd === "event") {
-        createInput("event", data["events"]);
+        createInput("event", data.events || []);
     }
 
     if (cmd === "lookup") {
         let combined = [
-            ...data["items"],
-            ...data["wear items"],
-            ...data["equip items"],
-            ...data["use items"]
+            ...(data.items || []),
+            ...(data["wear items"] || []),
+            ...(data["equip items"] || []),
+            ...(data["use items"] || [])
         ];
         createInput("lookup", combined);
     }
 
     if (cmd === "pawn") {
-        createInput("race", data["race"]);
-        createInput("xeno", data["xeno"]);
-        createInput("sex", data["sex"]);
-        createInput("age", data["age"]);
+        createInput("race", data.race);
+        createInput("sex", data.sex);
+        createInput("age", data.age);
     }
 
     if (cmd === "use") {
-        createInput("use", data["use items"]);
+        createInput("use", data["use items"] || []);
     }
 
     if (cmd === "surgery") {
-        createInput("surgery", data["surgery"]);
+        createInput("surgery", data.surgery);
     }
 
     if (cmd === "wear") {
-        createInput("wear", data["wear items"]);
-        createInput("material", data["material"]);
-        createInput("quality", data["quality"]);
+        createInput("wear", data["wear items"] || []);
+        createInput("material", data.material || []);
+        createInput("quality", data.quality);
     }
 
     generateCommand();
@@ -178,10 +178,14 @@ function buildUI() {
 document.addEventListener("input", generateCommand);
 
 function generateCommand() {
-    const cmd = document.getElementById("commandInput").value;
+    const rawCmd = document.getElementById("commandInput").value;
+    const cmd = normalize(rawCmd);
+
     const inputs = document.querySelectorAll("#dynamic input");
 
-    let values = Array.from(inputs).map(i => i.value).filter(v => v);
+    let values = Array.from(inputs)
+        .map(i => i.value)
+        .filter(v => v);
 
     document.getElementById("result").textContent =
         cmd ? "!" + cmd + " " + values.join(" ") : "";
