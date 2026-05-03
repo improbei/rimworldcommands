@@ -1,0 +1,73 @@
+{
+  "commands": [
+    "!accept pawn","Accept a pawn into your colony",
+    "!addtrait","Add a trait to a pawn",
+    "!backpack","Give a pawn a backpack",
+    "!balance","Check your balance",
+    "!buy","Buy an item",
+    "!colonist","Spawn a colonist",
+    "!equip","Equip a pawn",
+    "!event","Trigger an event",
+    "!heal pawn","Heal a pawn",
+    "!join queue","Join the queue",
+    "!lookup","Lookup item info",
+    "!military aid","Call military aid",
+    "!my pawn","View your pawn",
+    "!pawn","Create a pawn",
+    "!raid","Trigger a raid",
+    "!replacetrait","Replace a trait",
+    "!set traits","Set pawn traits",
+    "!surgery","Perform surgery",
+    "!trait","View trait info",
+    "!use","Use an item",
+    "!wear","Wear clothing"
+  ],
+
+  "traits": [
+    "Abrasive", "Annoying Voice", "Beautiful", "Ugly", "Bloodlust", "Kind", "Psychopath", "Pyromaniac", "Tough", "Wimp", "Fast Learner", "Slow Learner", "Industrious", "Lazy", "Greedy", "Jealous", "Sanguine", "Depressive", "Neurotic", "Very Neurotic"
+  ],
+
+  "items": [
+    "Wood", "Sheep Wool", "Muffalo Wool", "Megasloth Wool", "Bison Wool", "Alpaca Wool", "Agave Fruit", "Berries", "Corn", "Potatoes", "Rice", "Cloth", "Devilstrand", "Hyperweave", "Synthread", "Heater", "Granite Blocks", "Limestone Blocks", "Marble Blocks", "Sandstone Blocks", "Slate Blocks", "Foam Turret", "IED Antigrain Warhead Trap", "IED EMP Trap", "IED Firefoam Trap", "IED Incendiary Trap", "IED Smoke Trap", "IED Tox Trap", "IED Trap", "Mini-turret", "Mortar", "Drum", "Flatscreen Television", "Harp", "Soapstone Ring", "Horseshoes Pin", "Megascreen Television", "Piano", "Telescope", "Tube Television", "Gold", "Jade", "Plasteel", "Silver", "Steel", "Uranium", "Dye", "Pop", "Psychoid Leaves", "Smokeleaf Leaves", "Antigrain Warhead", "EMP Shell", "Firefoam Shell", "High-explosive Shell", "Incendiary Shell", "Smoke Shell", "Tox Shell", "Glitterworld Medicine", "Herbal Medicine", "Medicine", "Alpaca Meat", "Alphabeaver Meat", "Bear Meat", "Beef", "Bird Meat", "Bison Meat", "Boomalope Meat", "Boomrat Meat", "Capybara Meat", "Caribou Meat", "Cat Meat", "Chicken Meat", "Chinchilla Meat", "Cobra Meat", "Cougar Meat", "Donkey Meat", "Dromedary Meat", "Duck Meat", "Elephant Meat", "Elk Meat", "Fox Meat", "Gazelle Meat", "Goat Meat", "Guinea Pig Meat", "Hare Meat", "Horse Meat", "Human Meat", "Husky Meat", "Ibex Meat", "Iguana Meat", "Labrador Retriever Meat", "Lynx Meat", "Megasloth Meat", "Monkey Meat", "Muffalo Meat", "Panther Meat", "Pork", "Raccoon Meat", "Rat Meat", "Rhinoceros Meat", "Sheep Meat", "Squirrel Meat", "Tortoise Meat", "Turkey Meat", "Venison", "Warg Meat", "Wolf Meat", "Yak Beef", "Yorkshire Terrier Meat", "Carnivore Fine Meal", "Carnivore Lavish Meal", "Fine Meal", "Lavish Meal", "Nutrient Paste Meal", "Packaged Survival Meal", "Simple Meal", "Vegetarian Fine Meal", "Vegetarian Lavish Meal", "Advanced Component", "Basic Subcore", "Chemfuel", "Component", "High Subcore", "Nanostructuring Chip", "Nutrimine", "Power Focus Chip", "Signal Chip", "Standard Subcore", "Wart", "Bearskin", "Bird Skin", "Blue Fur", "Camelhide", "Chinchilla Fur", "Dog Leather", "Elephant Leather", "Fox Fur", "Guinea Pig Fur", "Heavy Fur", "Human Leather", "Light Leather", "Blizzard Skin", "Panther Fur", "Pack Leather", "Pigskin", "Plain Leather", "Rhinoceros Leather", "Thrumbo Fur", "Wolfskin", "Baby Food", "Chocolate", "Hay", "Hemogen Pack", "Kibble", "Pemmican", "Ambrosia", "Beer", "Deathrest Capacity Serum", "Flake", "Go-Juice", "Healer Mech Serum", "Luciferium", "Penoxycyline", "Psychite Tea", "Resurrector Mech Serum", "Smokeleaf Joint", "Wake-Up", "Yayo", "Novel", "Schematic", "Textbook"
+  ],
+
+  "equip items": [
+    "Assault Rifle", "Auto Pistol", "Axe", "Beam Graser", "Bolt Action Rifle", "Breach Axe", "Chain Shotgun", "Charge Lance", "Charge Rifle", "Club", "Doomsday Rocket Launcher", "Elephant Tusk", "Eltex Staff", "EMP Grenades", "EMP Launcher", "Flame Bow", "Frag Grenades", "Gladius", "Greatbow", "Heavy Charge Blaster", "Heavy SMG", "Hellsphere Cannon", "Ikwa", "Incendiary Launcher", "Inferno Cannon", "Knife", "Light Charge Blaster", "LMG", "Longsword", "Mace", "Machine Pistol", "Mini-flameblaster", "Minigun", "Mini-shotgun", "Molotov Cocktails", "Monosword", "Needle Gun", "Needle Launcher", "Persona Monosword", "Persona Plasmasword", "Persona Zeushammer", "Pilla", "Plasmasword", "Pump Shotgun", "Recurve Bow", "Revolver", "Short Bow", "Slugthrower", "Smoke Launcher", "Sniper Rifle", "Spear", "Spiner", "Thrumbo Horn", "Thump Cannon", "Tox Grenades", "Toxbomb Launcher", "Toxic Needle Gun", "Triple Rocket Launcher", "Warhammer", "Zeushammer"
+  ],
+
+  "wear items": [
+    "Airwire Headset", "Array Headset", "Authority Cap", "Bandwidth Pack", "Beret", "Blindfold", "Bowler Hat", "Broadwrap", "Burqa", "Button-Down Shirt", "Cape", "Cataphract Armor", "Cataphract Helmet", "Control Pack", "Coronet", "Corset", "Cowboy Hat", "Crown", "Duster", "Eltex Helmet", "Eltex Robe", "Eltex Shirt", "Eltex Skullcap", "Eltex Vest", "Face Mask", "Firefoam Pop Pack", "Flack Helmet", "Flack Jacket", "Flack Pants", "Flack Vest", "Flop Hat", "Formal Shirt", "Formal Vest", "Gas Mask", "Grenadier Armor", "Gunlink", "Headwrap", "Heavy Bandolier", "Hood", "Interrogator Headset", "Jacket", "Jump Pack", "Ladies Hat", "Locust Armor", "Low-shield Pack", "Marine Armor", "Marine Helmet", "Mechcommander Helmet", "Mechlord Helmet", "Mechlord Suit", "Orbital Bombardment Targeter", "Orbital Mech Cluster Targeter", "Orbital Power Beam Targeter", "Arca", "Phoenix Armor", "Plate Armor", "Prestige Cataphract Armor", "Prestige Cataphract Helmet", "Prestige Marine Armor", "Prestige Marine Helmet", "Prestige Recon Armor", "Prestige Recon Helmet", "Prestige Robe", "Psychic Foil Helmet", "Psychic Insanity Lance", "Psychic Shock Lance", "Recon Armor", "Recon Helmet", "Robe", "Sash", "Shadecone", "Shield Belt", "Simple Helmet", "Slave Body Strap", "Slave Collar", "Slice Cap", "Smoke Pop Pack", "Stellic Crown", "Tailcap", "Top Hat", "Tornado Generator", "Torture Crown", "Toxs Pack", "Tribal Headdress", "Tribal Wear", "T-Shirt", "Tuque", "Veil", "Visage Mask", "War Mask"
+  ],
+
+  "use items": [
+    "Skilltrainer Animals", "Skilltrainer Artistic", "Skilltrainer Construction", "Skilltrainer Cooking", "Skilltrainer Crafting", "Skilltrainer Intellectual", "Skilltrainer Medical", "Skilltrainer Melee", "Skilltrainer Mining", "Skilltrainer Plants", "Skilltrainer Shooting", "Skilltrainer Social", "Penoxycyline", "Go-juice", "Luciferium", "Smokeleaf Joint", "Yayo", "Psychite Tea", "Beer", "Ambrosia", "Wake-up"
+  ],
+
+  "events": [
+    "Acidic Smog", "Alpha Beavers", "Ambrosia Sprout", "Ambush", "Aurora", "Cold Snap", "Heat Wave", "Flashstorm", "Solar Flare", "Infestation", "Manhunter Pack", "Psychic Drone", "Psychic Soothe", "Trader Caravan Arrival", "Orbital Trader Arrival", "Raid", "Transport Pod Crash", "Beggars Arrive", "Caravan Meeting", "Crop Blight", "Farm Animals Wander In", "Flu", "Gut Worms", "Herd Migration", "Imperial Deserter", "Imperial Wimp", "Insect Jelly", "Malaria", "Man in Black", "Manhunter Ambush", "Mass Animal Insanity", "Meteorite Impact", "Organ Decay", "Payment Demand", "Pilgrims Arrive", "Plague", "Quest", "Ransom Demand", "Resource Pod Crash", "Royal Ascent", "Self-Tame", "Ship Chunk Drop", "Ship Part Crash", "Short Circuit", "Thrumbos Pass", "Traveler Group", "Tribute Collector Caravan Arrival", "Visitor Group", "Wanderer Joins", "Wanderers", "Wild Man Wanders In", "Work Site"
+  ],
+
+  "race": [
+    "Human"
+  ],
+
+  "xeno": [
+    "Baseliner", "Hybrid", "Dirtmole", "Genie", "Highmate", "Hussar", "Impid", "Neanderthal", "Pigskin", "Sanguophage", "Waster", "Yttakin"
+  ],
+
+  "sex": [
+    "Male","Female"
+  ],
+
+  "age": [
+    "18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86"
+  ],
+
+  "material": [
+    "Bearskin", "Birdskin", "Blue Fur", "Camelhide", "Chinchilla Fur", "Dog Leather", "Elephant Leather", "Fox Fur", "Guinea Pig Fur", "Heavy Fur", "Human Leather", "Light Leather", "Blizzard Skin", "Panther Fur", "Pack Leather", "Pigskin", "Plain Leather", "Rhinoceros Leather", "Thrumbo Fur", "Wolfskin", "Sheep Wool", "Muffalo Wool", "Megasloth Wool", "Bison Wool", "Alpaca Wool", "Cloth", "Devilstrand", "Hyperweave", "Synthread", "Gold", "Jade", "Plasteel", "Silver", "Steel", "Uranium"
+  ],
+
+  "quality": [
+    "Awful","Poor","Normal","Good","Excellent","Masterwork","Legendary"
+  ]
+}
