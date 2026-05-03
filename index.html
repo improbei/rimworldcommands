@@ -1,198 +1,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RimWorld Command Generator</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Generator</title>
 <style>
-body {
-    font-family: Arial;
-    background: #0f0f0f;
-    color: white;
-    padding: 20px;
-}
-select, button {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    width: 400px;
-    font-size: 16px;
-}
-#output {
-    margin-top: 20px;
-    background: #1e1e1e;
-    padding: 15px;
-    font-size: 18px;
-}
+body { font-family: Arial; padding: 20px; }
+select, input { width: 300px; margin: 5px 0; padding: 6px; }
+button { padding: 8px 12px; margin-top: 10px; }
 </style>
 </head>
 <body>
+<h2>Command Generator</h2>
 
-<h1>RimWorld Command Generator</h1>
+<label>Command:</label><br>
+<input list="commands" id="commandInput" oninput="handleCommand()">
+<datalist id="commands"></datalist>
+<div id="description"></div>
 
-<select id="command"></select>
-<div id="dynamic"></div>
+<div id="dynamicFields"></div>
 
-<button onclick="generate()">Generate Command</button>
+<br>
+<button onclick="generateCommand()">Generate</button>
+<button onclick="copyCommand()">Copy</button>
 
-<div id="output"></div>
+<p id="output"></p>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
+let data = {};
 
-// =======================
-// COMMANDS (FULL)
-// =======================
-
-const commands = [
-"!acceptpawn","!addtrait","!backpack","!balance","!buy","!colonist",
-"!equip","!event","!healpawn","!joinqueue","!lookup","!militaryaid",
-"!mypawn","!pawn","!raid","!replacetrait","!settraits",
-"!surgery","!trait","!pricecheck","!removetrait","!use"
-];
-
-// =======================
-// ITEMS (FULL - YOUR LIST)
-// =======================
-
-const items = [
-"Airwire Headset", "Array Headset", "Authority Cap", "Beret", "Bowler Hat", "Cape", "Cataphract Armor", "Cataphract Helmet", "Marine Armor", "Marine Helmet", "Recon Armor", "Recon Helmet", "Shield Belt", "Duster", "Parka", "Assault Rifle", "Autopistol", "Bolt-action Rifle", "Charge Rifle", "Charge Lance", "Minigun", "Sniper Rifle", "Pump Shotgun", "Revolver", "LMG", "Heavy SMG", "Machine Pistol", "Zeus Hammer", "Monosword", "Plasma Sword", "Knife", "Spear", "Warhammer", "Frag Grenades", "EMP Grenades", "Triple Rocket Launcher", "Doomsday Rocket Launcher", "Bionic Arm", "Bionic Eye", "Bionic Heart", "Bionic Leg", "Bionic Spine", "Learning Assistant", "Painstopper", "Joywire", "Prosthetic Arm", "Prosthetic Leg", "Steel", "Plasteel", "Uranium", "Gold", "Silver", "Component", "Advanced Component", "Chemfuel", "Wood", "Cloth", "Devilstrand", "Hyperweave", "Go-juice", "Luciferium", "Smokeleaf Joint", "Yayo", "Psychite Tea", "Beer", "Ambrosia", "Wake-up", "EMP Launcher", "Molotov Cocktails", "Smoke Launcher", "Incendiary Launcher", "Tox Grenades", "Tox Bomb Launcher", "Beam Grazer", "Heavy Charge Blaster", "Light Charge Blaster", "Hellsphere Cannon", "Inferno Cannon", "Miniflame Blaster", "Needle Gun", "Needle Launcher", "Tox Needle Gun", "Thump Cannon", "Chain Shotgun", "Granite Blocks", "Limestone Blocks", "Marble Blocks", "Sandstone Blocks", "Slate Blocks", "Hops", "Psychoid Leaves", "Smokeleaf Leaves", "Agave Fruit", "Berries", "Corn", "Potatoes", "Rice", "Simple Meal", "Fine Meal", "Lavish Meal", "Packaged Survival Meal", "Pemmican", "Kibble", "Chocolate", "Baby Food", "Synthread", "Dye", "Cochlear Implant", "Drill Arm", "Elbow Blade", "Field Hand", "Hand Talon", "Knee Spike", "Mindscrew", "Power Claw", "Prosthetic Heart", "Venom Fangs", "Venom Talon", "Armor Skin Gland", "Bionic Ear", "Bionic Jaw", "Bionic Stomach", "Bionic Tongue", "Heart", "Kidney", "Liver", "Lung", "Anti-grain Warhead", "EMP Shell", "Firefoam Shell", "High Explosive Shell", "Incendiary Shell", "Smoke Shell", "Orbital Trade Beacon", "Mortar", "Mini Turret", "Foam Turret", "Heate", "Jade", "Alpaca Meat", "Alpha Beaver Meat", "Bear Meat", "Beef", "Bird Meat", "Bison Meat", "Boomalope Meat", "Boomrat Meat", "Capybara Meat", "Caribou Meat", "Cat Meat", "Chicken Meat", "Chinchilla Meat", "Cobra Meat", "Cougar Meat", "Donkey Meat", "Dromedary Meat", "Duck Meat", "Elephant Meat", "Elk Meat", "Fox Meat", "Gazelle Meat", "Goat Meat", "Guinea Pig Meat", "Hare Meat", "Horse Meat", "Human Meat", "Husky Meat", "Ibex Meat", "Iguana Meat", "Immature Dryad Meat", "Insect Meat", "Labrador Retriever Meat", "Lynx Meat", "Megasloth Meat", "Monkey Meat", "Muffalo Meat", "Panther Meat", "Porcupine Meat", "Raccoon Meat", "Rat Meat", "Rhinoceros Meat", "Sheep Meat", "Squirrel Meat", "Thrumbo Meat", "Tortoise Meat", "Toxalope Meat", "Turkey Meat", "Venison", "Warg Meat", "Waster Meat", "Wolf Meat", "Yak Beef", "Yorkshire Terrier Meat", "Bearskin", "Birdskin", "Bluefur", "Camelhide", "Chinchilla Fur", "Dog Leather", "Elephant Leather", "Fox Fur", "Guinea Pig Fur", "Heavy Fur", "Human Leather", "Light Leather", "Lizard Skin", "Panther Fur", "Patchleather", "Pigskin", "Plainleather", "Rhinoceros Leather", "Thrumbo Fur", "Wolfskin", "Nutrient Paste Meal", "Vegetarian Fine Meal", "Vegetarian Lavish Meal", "Carnivore Fine Meal", "Carnivore Lavish Meal", "Novel", "Dramatic Book", "Textbook", "Deathrest Capacity Serum", "Healer Mech Serum", "Resurrector Mech Serum", "Penoxycyline", "Glitterworld Medicine", "Herbal Medicine", "Medicine", "Bandwidth Pack", "Blindfold", "Broad Wrap", "Burqa", "Button-Down Shirt", "Control Pack", "Cornet", "Corset", "Cowboy Hat", "Crown", "Eltex Helmet", "Eltex Robe", "Eltex Shirt", "Eltex Skullcap", "Eltex Vest", "Face Mask", "Firefoam Pop Pack", "Flak Helmet", "Flak Jacket", "Flak Pants", "Flak Vest", "Flophat", "Formal Shirt", "Formal Vest", "Gas Mask", "Grenadier Armor", "Gunlink", "Headwrap", "Heavy Bandolier", "Hood", "Inquisitor Headset", "Jacket", "Jump Pack", "Ladies Hat", "Locust Armor", "Low Shield Pack", "Mech Commander Helmet", "Mechlord Helmet", "Mechlord Suit", "Orbital Bombardment Targeter", "Orbital Mech Cluster Targeter", "Orbital Power Beam Targeter", "Pants", "Phoenix Armor", "Plate Armor", "Prestige Cataphract Armor", "Prestige Cataphract Helmet", "Prestige Marine Armor", "Prestige Marine Helmet", "Prestige Recon Armor", "Prestige Recon Helmet", "Prestige Robe", "Psychic Foil Helmet", "Psychic Insanity Lance", "Psychic Shock Lance", "Robe", "Sash", "Jade Crown", "Simple Helmet", "Slave Body Strap", "Slave Collar", "Skullcap", "Smoke Pop Pack", "Stellarch Crown", "Tailcap", "Top Hat", "Tornado Generator", "Torture Crown", "Tox Pack", "Tribal Headdress", "Tribal Wear", "T-Shirt", "Veil", "Visage Mask", "War Mask", "Short Bow", "Recurve Bow", "Greatbow", "Flame Bow", "Axe", "Breach Axe", "Club", "Gladius", "Longsword", "Mace", "Plasmasword"
-];
-
-// =======================
-// USE ITEMS
-// =======================
-
-const useItems = [
-"Skilltrainer (Animals)","Skilltrainer (Artistic)","Skilltrainer (Construction",
-"Skilltrainer (Cooking)","Skilltrainer (Crafting)","Skilltrainer (Intellectual)",
-"Skilltrainer (Medical)","Skilltrainer (Melee)","Skilltrainer (Mining)",
-"Skilltrainer (Plants)","Skilltrainer (Shooting)","Skilltrainer (Social)"
-];
-
-// =======================
-// EVENTS (FULL CORE SET)
-// =======================
-
-const events = [
-"Acidic Smog","Alpha Beavers","Ambrosia Sprout","Aurora",
-"Cold Snap","Heat Wave","Flashstorm","Solar Flare","Infestation",
-"Manhunter Pack","Psychic Drone","Psychic Soothe",
-"Raid","Transport Pod Crash","Beggars Arrive","Caravan Arrival"
-];
-
-// =======================
-// TRAITS
-// =======================
-
-const traits = [
-"Abrasive","Beautiful","Ugly","Bloodlust","Kind","Psychopath",
-"Pyromaniac","Tough","Wimp","Fast Learner","Lazy","Industrious",
-"Greedy","Jealous","Sanguine","Depressive","Neurotic"
-];
-
-// =======================
-// PAWN OPTIONS
-// =======================
-
-const race = ["Human"];
-const xeno = ["Baseliner","Hybrid","Dirtmole","Genie","Highmate","Hussar","Impid","Neanderthal","Pigskin","Waster"];
-const sex = ["Male","Female"];
-const age = Array.from({length: 50}, (_,i)=> (18+i).toString());
-
-// =======================
-// INIT
-// =======================
-
-const cmdSelect = document.getElementById("command");
-commands.forEach(c=>{
-    let o=document.createElement("option");
-    o.value=c;
-    o.textContent=c;
-    cmdSelect.appendChild(o);
-});
-
-cmdSelect.addEventListener("change", buildUI);
-
-// =======================
-// BUILD UI
-// =======================
-
-function buildUI(){
-    const val = cmdSelect.value;
-    const container = document.getElementById("dynamic");
-    container.innerHTML="";
-
-    if (["!buy","!lookup","!pricecheck"].includes(val)){
-        container.appendChild(makeSelect("secondary",items));
-    }
-    else if (val==="!event"){
-        container.appendChild(makeSelect("secondary",events));
-    }
-    else if (val==="!use"){
-        container.appendChild(makeSelect("secondary",useItems));
-    }
-    else if (["!addtrait","!removetrait"].includes(val)){
-        container.appendChild(makeSelect("secondary",traits));
-    }    
-    else if (val==="!replacetrait"){
-        container.appendChild(makeSelect("secondary",traits));
-        container.appendChild(makeSelect("third",traits));
-        
-    }
-    else if (val==="!pawn"){
-        container.appendChild(makeSelect("race",race));
-        container.appendChild(makeSelect("xeno",xeno));
-        container.appendChild(makeSelect("sex",sex));
-        container.appendChild(makeSelect("age",age));
-    }
-}
-
-// =======================
-// DROPDOWN BUILDER
-// =======================
-
-function makeSelect(id,list){
-    const s=document.createElement("select");
-    s.id=id;
-
-    let d=document.createElement("option");
-    d.text="Select...";
-    d.value="";
-    s.appendChild(d);
-
-    list.forEach(i=>{
-        let o=document.createElement("option");
-        o.value=i;
-        o.textContent=i;
-        s.appendChild(o);
+fetch('rimworld_master_full(4).xlsx')
+.then(res => res.arrayBuffer())
+.then(buffer => {
+    const workbook = XLSX.read(buffer);
+    workbook.SheetNames.forEach(name => {
+        data[name] = XLSX.utils.sheet_to_json(workbook.Sheets[name], {header:1});
     });
 
-    return s;
-}
+    populateCommands();
+});
 
-// =======================
-// GENERATE
-// =======================
-
-function generate(){
-
-    let cmd = cmdSelect.value;
-    let result = cmd;
-
-    const sec = document.getElementById("secondary");
-    if(sec) result += " " + sec.value;
-
-    if(cmd==="!pawn"){
-        result += " " +
-        document.getElementById("race").value + " " +
-        document.getElementById("xeno").value + " " +
-        document.getElementById("sex").value + " " +
-        document.getElementById("age").value;
-    }
-
-    document.getElementById("output").innerText = result;
-}
-
-</script>
-
-</body>
+function populateCommands(){
+    let commands = data['Commands'];
+    let list = document.getElementById('commands');
+    commands.forEach(row => {
+        if(row[0]){
+            let opt = document.createElement('option');
+            opt.value = row[0];
+            list.appendChild(opt);
+        }
 </html>
