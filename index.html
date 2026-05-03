@@ -119,9 +119,13 @@ function buildUI() {
         createInput("trait", data["traits"]);
     }
 
-    if (cmd === "removetrait") {
+    if (cmd === "replacetrait") {
         createInput("trait1", data["traits"]);
         createInput("trait2", data["traits"]);
+    }
+
+    if (cmd === "removetrait") {
+        createInput("trait", data["traits"]);
     }
 
     if (cmd === "buy") {
@@ -156,6 +160,10 @@ function buildUI() {
 
     if (cmd === "use") {
         createInput("use", data["use items"]);
+    }
+
+    if (cmd === "surgery") {
+        createInput("surgery", data["surgery"]);
     }
 
     if (cmd === "wear") {
