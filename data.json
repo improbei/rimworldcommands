@@ -15,6 +15,7 @@
     "!raid","Trigger a raid",
     "!removetrait","Remove a trait from your pawn",
     "!replacetrait","Replace one of your pawns traits with another",
+    "!revive","Revive your pawn or another pawn",
     "!settraits","Set all 6 of your pawns traits",
     "!surgery","Perform surgery on your pawn",
     "!trait","View trait info",
