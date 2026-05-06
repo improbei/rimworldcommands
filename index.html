@@ -154,6 +154,10 @@ function buildUI() {
         createInput("event", data.events || []);
     }
 
+    if (cmd === "weather") {
+        createInput("weather", data.weather || []);
+    }
+    
     if (cmd === "lookup") {
         let combined = [
             ...(data.items || []),
