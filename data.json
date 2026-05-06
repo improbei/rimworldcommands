@@ -51,6 +51,8 @@
     "Acidic Smog", "Alpha Beavers", "Ambrosia Sprout", "Ambush", "Aurora", "Cold Snap", "Heat Wave", "Flashstorm", "Solar Flare", "Infestation", "Manhunter Pack", "Psychic Drone", "Psychic Soothe", "Trader Caravan Arrival", "Orbital Trader Arrival", "Raid", "Transport Pod Crash", "Beggars Arrive", "Caravan Meeting", "Crop Blight", "Farm Animals Wander In", "Flu", "Gut Worms", "Herd Migration", "Imperial Deserter", "Imperial Wimp", "Insect Jelly", "Malaria", "Man in Black", "Manhunter Ambush", "Mass Animal Insanity", "Meteorite Impact", "Organ Decay", "Payment Demand", "Pilgrims Arrive", "Plague", "Quest", "Ransom Demand", "Resource Pod Crash", "Royal Ascent", "Self-Tame", "Ship Chunk Drop", "Ship Part Crash", "Short Circuit", "Thrumbos Pass", "Traveler Group", "Tribute Collector Caravan Arrival", "Visitor Group", "Wanderer Joins", "Wanderers", "Wild Man Wanders In", "Work Site"
   ],
 
+  "weather":["Clear","dry thunderstorm","fog","foggy rain","gentle snow","hard snow","rain","rainy thunderstorm"],
+
   "race": ["Human"],
   
   "xeno": [
